@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC 
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link href="estilos.css" rel="stylesheet" type="text/css">
+    <title> Mi Pagina</title>
+</head>
+
+<script src="jquery-4.0.0.JS"></script>
+
+<!-- ⬇️  ⬇️ -->
+<script>
+    $(document).ready(function() 
+    {
+        $("#img-estudiando").mouseenter(function() 
+        {
+          $(this).css("transform", "scale(1.3)"); 
+        });
+         $("#img-estudiando").mouseleave(function() 
+        { $(this).css("transform", "scale(1)");            
+        });
+  
+        // REGLA INTERACTIVA: Cuando hacen clic en "Dinero Rápido"
+        $("#btn-dinero-rapido").click(function(e) 
+        {
+            e.preventDefault(); // Evita que la página intente recargarse
+            $("main").hide(); // Esconde el contenido común y el aside
+            $("#pantalla-revelacion").hide(); // Asegura que la alerta empiece oculta
+            $("#zona-formulario").fadeIn(); // Hace aparecer el formulario con suavidad
+        });
+    });
+
+    // Función para procesar los datos falsos y lanzar la revelación
+    function procesarEstafa() {
+        // Esconde la zona de preguntas
+        $("#zona-formulario").hide();
+        // Muestra el balde de agua fría educativo
+        $("#pantalla-revelacion").fadeIn();
+        window.scrollTo(0, 0);
+    }
+</script>
+
+<body>
+    <header>
+        <img src="dinero1.jpeg">
+    </header>
+
+    <nav>
+		<ul id="menu">
+			<li> <a href="#"> Inicio          </a>	</li>
+			<li> <a href="https://freecash.com/academy/es/discover/service/get-paid-to-do-online-tasks"> Tareas Pagadas  </a>	</li>
+			<li> <a href="https://eldorado.io/"> Compra y Venta  </a>	</li>
+                        <li> <a href="#"> Dinero Rápido   </a>	</li>
+                        <li> <a href="pasivo.html"> ¿Buscas más?    </a>	</li>
+        </ul>            
+    	
+    </nav>
+
+    <main>
+        <section>
+            <h2>COMO GANAR DINERO FACIL🤑🤑👌👌</h2>
+            <P class="contenido">
+Haz que tu dinero trabaje por ti. 🤑💥¿Cansado de buscar y no encontrar? 🤑 ¡Aquí está el secreto!Descubre los métodos reales y más sencillos para empezar a generar ingresos desde hoy mismo.           Sin trucos, sin jefes y a tu propio ritmo. 🚀             ¡El momento de cambiar tus finanzas es AHORA! Haz clic aquí y empieza ya. 👌
+			</P>
+            
+            <P class="contenido">
+				Errores comunes que te estàn frenando 😥:
+				<ul id="listahab">
+					<li>Sobornar en pùblico 🤐</li>
+					<li>Un trabajo digno🤓	</li>
+					<li>Tener Novia🤨</li>
+					<li>Pagar tus deudas a tiempo🙄:</li>
+					<li>Comprar cosas con tu propia tarjeta😭:</li>
+					<li>Bañarte diario🧼❌</li>
+					<li>Ir al Gimnasio🥱</li>
+					<li>No Suscribirte al canal de <a href="https://www.youtube.com/@JinoGamerHC" target="_blank">JinoGamerHC</a>😏😏  </li>	
+                         </ul>
+            </P>
+            
+            <img src="estudiando.jpg" id="img-estudiando">
+        </section>
+        
+        <aside>
+            <h2>FORMAS DE GANAR DINERO</h2>
+
+			<ul id="lista-link">
+				<li> <a href="https://youtu.be/xzG7CQmDaas?si=HBqwg7EsNWg6eLt2">Como Estafar Legalmente	</a></li>
+				<li> <a href="https://www.shopify.com/es/blog/ganar-dinero-desde-casa">Factura $1,000/Mes Desde Casa: 25 Ideas Reales</a></li>
+				<li> <a href="https://www.moolineo.com/en/">Trabaja en Pijama y Gana </a></li> 
+                                <li> <a href="https://www.godaddy.com/resources/latam/emprender/ideas-ingresos-pasivos">El Arte de Ganar Sin Hacer Nada</a></li>
+                                                                                                          </ul>            
+        </aside>  
+    </main>
+    
+    <footer>
+        <P>Libre de copyrigth (c) Docente: Ing. Mireya Romero Herrera - 2026</P>
+    </footer>
+    
+
+</body>
+
+</html>

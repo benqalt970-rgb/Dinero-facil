@@ -1,0 +1,127 @@
+
+* {
+	padding: 0px;
+	margin: 0Px;
+	border: 0px;
+}
+
+body{
+	width: 100%;
+	height: auto;	
+	margin: auto;
+}
+
+header{
+	width: auto;
+	height: 300px;
+	background: white;
+        background-image: url('dinero1.pneg');
+        background-size: cover;
+        background-repeat: no-repeat;
+}
+
+nav{
+	width: autox;
+	height: 50px;
+	background:lightblue;
+        position:  sticky;
+        top:0;
+        z-index:1000;	
+}
+
+main{
+	width: 100%;
+	display:flex;
+        align-items: stretch;
+	background:blue;
+}
+
+section{
+	width: 80%;
+	background:lavender;
+}
+
+aside{
+	width: 20%;
+	background:silver;
+        position: sticky;
+        top: 50px;
+        z-index: 999;	
+}
+
+footer{
+	height: 50px;
+	background:#AAAAAA;		
+}
+
+
+
+
+
+
+h2 {
+	font-family:"Times New Roman";
+	font-size:16px;
+	font-weight: bold;
+	text-align:center;
+	padding:30px;
+}
+
+.contenido {
+	font-family:"Times New Roman";
+	font-size:14px;
+	text-align:left;
+	padding:10px;	
+}
+
+
+#listahab {
+	padding-left:40px;
+	list-style: circle;
+}
+
+
+#img-estudiando {
+	width:200px;
+	padding: 20px;		
+}
+
+
+#lista-link {
+	padding-left:5px;
+	list-style: none;
+}
+
+#lista-link li{
+	padding-top:20;	
+}
+
+
+
+
+#menu{
+	list-style:none;
+	
+}
+
+#menu li {
+	display:inline-block;
+	float:left;  	
+}
+
+#menu li a{
+	text-decoration:none;			
+	padding:16px; 
+	font-family: Arial, Helvetica, sans-serif;
+	display:block;
+}
+
+#menu li a:hover{	
+	background-color:#CCCCCC;	
+	color: black;	
+	font-weight: bold;			
+}
+
+
+
+
