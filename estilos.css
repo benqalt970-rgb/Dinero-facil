@@ -1,77 +1,109 @@
-
 * {
 	padding: 0px;
 	margin: 0Px;
 	border: 0px;
+    box-sizing: border-box; /* Clave: evita que los paddings deformen tus bloques de 80% y 20% */
 }
 
 body{
 	width: 100%;
 	height: auto;	
 	margin: auto;
+    background-color: #F0F4F8;
 }
 
 header{
-	width: auto;
-	height: 300px;
-	background: white;
-        background-image: url('dinero1.pneg');
-        background-size: cover;
-        background-repeat: no-repeat;
+	width: 100%;
+	height: 309px;
+    background: white url('dinero1.jpeg') no-repeat center;
+    background-size: cover;             /* 💡 Mantiene la imagen estirada cubriendo todo, CERO bordes blancos */
+    display: block;
+    
+    /* 💡 EL TRUCO: Aplica un suavizado natural de 0.6 segundos en su estado normal */
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); 
 }
 
+/* 🌟 EFECTO NATURAL AL PASAR EL MOUSE */
+header:hover {
+    transform: scale(1.04);     /* 💡 Hace que todo el bloque de billetes se agrande un 4% hacia afuera con zoom real */
+}
+        
+
 nav{
-	width: autox;
+	width: 100%;
 	height: 50px;
-	background:lightblue;
-        position:  sticky;
-        top:0;
-        z-index:1000;	
+	background:#B8FFB8;
+    position:  sticky;
+    top:0;
+    z-index:1000;
+    text-align:center;      /*Alinea el texto (subtitulo "h3")  en el centro*/	  
 }
 
 main{
 	width: 100%;
 	display:flex;
-        align-items: stretch;
-	background:blue;
+    align-items: stretch;
+	background:#DEFFE3;
 }
 
 section{
 	width: 80%;
 	background:lavender;
+    padding: 20px
 }
 
 aside{
 	width: 20%;
-	background:silver;
-        position: sticky;
-        top: 50px;
-        z-index: 999;	
+	background:#DEFFE3;
+    position: sticky;
+    top: 10px;
+    z-index: 999;
+    text-align: center;	
 }
 
 footer{
 	height: 50px;
-	background:#AAAAAA;		
+	background:#AAAAAA;
+    text-align:center;		
 }
-
 
 
 
 
 
 h2 {
-	font-family:"Times New Roman";
-	font-size:16px;
-	font-weight: bold;
+	font-family: "Doto", sans-serif;
+	font-size:30px;
+	font weight:;
 	text-align:center;
-	padding:30px;
+	padding:26px;
+        color: #008235;
+}
+
+h3 {
+    font-family: "Doto", sans-serif;    /* tipo de letra del subtitulo */
+    font-size: 24px;                    /* El tamaño de la letra de h3 */
+    color: #008235;                     /* el color que queramos (este es el verde de tus links) */
+    padding: 15px 0px;                  /* Le da espacio arriba y abajo para que no se pegue al texto */
+    text-align:center;                  /*Alinea el texto (subtitulo "h3")  en el centro*/
+}
+
+
+
+.contenido, #listahab li  {
+	font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* 👈 Cambia aquí la letra para cambiar párrafos y lista al mismo tiempo */
+	font-size:18px;    /*Tamaño de letra para los "ul"(Errores comunes que te estàn frenando) solo los texto  */
+	text-align:left;
+	padding:20px;
+    color: #263238;	
 }
 
 .contenido {
-	font-family:"Times New Roman";
-	font-size:14px;
+	font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	font-size:18px;    /* */
 	text-align:left;
-	padding:10px;	
+	padding:20px;
+    color: #263238; 
 }
 
 
@@ -81,47 +113,145 @@ h2 {
 }
 
 
-#img-estudiando {
-	width:200px;
-	padding: 20px;		
-}
-
-
 #lista-link {
-	padding-left:5px;
+	padding-left:0px;
 	list-style: none;
+    text-align: center;
 }
 
 #lista-link li{
-	padding-top:20;	
+	padding-top:0;	
+}
+
+#lista-link img {                             /* Imágenes en el centro exacto sin importar el zoom  */
+    display: block !important;
+    margin: 10px auto !important;
+    max-width: 100%; /* 💡 Permite que las imágenes escalen proporcionalmente con el zoom */
+    height
 }
 
 
 
 
 #menu{
-	list-style:none;
-	
+	list-style:none;	
 }
 
 #menu li {
-	display:inline-block;
-	float:left;  	
+	display:inline-block;     /*Reemplazamos float:left por inline-block para que obedezcan al centrado */
+	 	
 }
 
 #menu li a{
+    color: #008235;
 	text-decoration:none;			
 	padding:16px; 
-	font-family: Arial, Helvetica, sans-serif;
 	display:block;
+
+       font-family: "Doto", sans-serif;
+       font-optical-sizing: auto;
+       font-weight: 900;
+       font-style: normal;
+       font-variation-settings:
+       "ROND" 100;
+       font-size: 22px;         /*Súbelo a 18px o 20px para agrandar los títulos del menú */
 }
 
 #menu li a:hover{	
-	background-color:#CCCCCC;	
-	color: black;	
+	background-color:#87FF87;	
+	color:black;	
 	font-weight: bold;			
 }
 
 
+/* ==========================================================================
+   CARRUSEL VERTICAL AUTOMÁTICO (SUBA Y BAJA)
+   ========================================================================== */
+
+aside {
+    overflow: hidden;     /* Oculta el contenido que se sale de la barra mientras se mueve */
+    height: 650px;       /* Altura fija de tu barra lateral para que funcione el bucle */
+}
+
+.carrusel-vertical {
+    display: block;
+    width: 100%;
+                                                  
+    animation: subirYBajar 12s ease-in-out infinite;  /* Hace que todo el bloque suba y baje en 12 segundos, de forma infinita y suave */
+}
+
+/* El cerebro del movimiento: Define las posiciones del desfile */
+@keyframes subirYBajar {
+    0% { transform: translateY(0); }         /* Empieza arriba normal */
+    45% { transform: translateY(-610px); }   /* Baja suavemente para mostrar lo de abajo */
+    55% { transform: translateY(-590px); }   /* Se queda quieto un momento abajo para que lean */
+    100% { transform: translateY(0); }       /* Regresa de forma fluida hacia arriba */
+}
 
 
+/* ==========================================================================
+   🚨 ESTILOS DEL CARTEL FLOTANTE DE ENTRADA (MODAL POPUP)
+   ========================================================================== */
+
+#cartel-terminos {
+    position: fixed;     /* Lo clava fijo en la pantalla sin importar si bajas o subes */
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(240, 244, 248, 1); /* Fondo oscuro transparente que bloquea el blog */
+    z-index: 5000;       /* Capa ultra alta para ponerse por encima del menú congelado (1000) */
+    display: flex;       /* Activa flexbox para centrar la cajita blanca en el medio */
+    align-items: center;
+    justify-content: center;
+    font-family: system-ui, sans-serif;
+}
+
+
+.ventana-blanca {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+}
+
+/* 💡 AQUÍ: Usamos h1 con clase propia para que NO estorbe a tus h2 ni h3 del contenido */
+.titulo-cartel {
+    color: #008235;
+    font-size: 24px;
+    font-family: 'Doto', sans-serif; /* Mantiene la tipografía bonita del menú */
+    font-weight: 900;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.caja-texto-legal {
+    max-height: 250px;
+    overflow-y: auto;    /* Crea una barra de desplazamiento interna si el texto es largo */
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+#btn-aceptar-terminos {
+    background: #008235; /* El mismo verde corporativo de tus enlaces del menú */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#btn-aceptar-terminos:hover {
+    background: #87FF87; /* Brilla en verde claro al pasar el mouse por encima */
+    color: black;
+}
