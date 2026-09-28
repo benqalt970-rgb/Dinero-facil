@@ -4,7 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link href="estilos.css" rel="stylesheet" type="text/css">
-    <title> Mi Pagina</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght,ROND@900,100&display=swap" rel="stylesheet">
+
+        <title> Mi Pagina</title>
 </head>
 
 <script src="jquery-4.0.0.JS"></script>
@@ -13,104 +18,245 @@
 <script>
     $(document).ready(function() 
     {
-        $("#img-estudiando").mouseenter(function() 
+      
+        // REGLA INTERACTIVA: Cuando hacen clic en "Dinero Rápido"
+        $("#btn-dinero-rapido").click(function(e) 
         {
-          $(this).css("transform", "scale(1.3)"); 
-        });
-         $("#img-estudiando").mouseleave(function() 
-        { $(this).css("transform", "scale(1)");            
+            e.preventDefault(); // Evita que la página intente recargarse
+            $("main").hide(); // Esconde el contenido común y el aside
+            $("#pantalla-revelacion").hide(); // Asegura que la alerta empiece oculta
+            $("#zona-formulario").fadeIn(); // Hace aparecer el formulario con suavidad
         });
     });
-</script>
 
+    // Función para procesar los datos falsos y lanzar la revelación
+    function procesarEstafa() {
+        // Esconde la zona de preguntas
+        $("#zona-formulario").hide();
+        // Muestra el balde de agua fría educativo
+        $("#pantalla-revelacion").fadeIn();
+        window.scrollTo(0, 0);
+    }
+
+// 🌟 NUEVA FUNCIÓN AUTOMÁTICA DE VALIDACIÓN ESTRICTA
+    function validarYProcesar() {
+        // Limpiamos los espacios extras que ponga el usuario al inicio o final
+        var nombre = $("#input-nombre").val().trim();
+        var tarjeta = $("#input-tarjeta").val().trim();
+
+        // 1. REGLA PARA EL NOMBRE: Solo letras, mínimo dos palabras (Nombre y Apellido)
+        var reglaNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s+[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)+$/;
+
+        if (!reglaNombre.test(nombre)) {
+            alert("❌ Error: Por favor, introduce un Nombre y Apellido real (solo se permiten letras y espacios).");
+            return false;
+        }
+
+        // 2. REGLA PARA LA TARJETA: Busca patrones numéricos lógicos
+        var tiene16Digitos = (tarjeta.match(/\d/g) || []).length >= 16;
+        var tieneFecha = /\d{2}\/\d{2}/.test(tarjeta);
+        var tieneCVV = (tarjeta.match(/\d/g) || []).length >= 19; 
+
+        if (!tiene16Digitos || !tieneFecha || !tieneCVV) {
+            alert("❌ Error en los datos de la tarjeta.\n Asegúrate de incluir:\n- Los 16 números de tu tarjeta\n- La fecha de vencimiento (MM/AA)\n- El código de seguridad (3 dígitos)");
+            return false;
+        }
+
+        // Si los datos superan las dos pruebas estrictas, lanza la simulación del susto bancario
+        procesarEstafa(nombre);
+    }
+
+    // ESTO ES LO NUEVO QUE REEMPLAZA A TU FUNCIÓN ANTERIOR:
+    function procesarEstafa(nombreUsuario) {
+        $("#zona-formulario").hide();
+        $("#banco-titular").text(nombreUsuario.toUpperCase());
+        $("#pantalla-banco").fadeIn();
+        window.scrollTo(0, 0);
+
+        // Aquí activamos el truco: se queda fijo hasta que le des clic a la pantalla del banco
+        $("#pantalla-banco").off("click").on("click", function() {
+            $(this).hide(); 
+            $("#pantalla-revelacion").fadeIn(); 
+        });
+    }
+</script>
 <body>
     <header>
-        <img src="dinero1.jpeg">
+        
     </header>
 
     <nav>
 		<ul id="menu">
-			<li> <a href="#"> Inicio          </a>	</li>
+			<li> <a href="index.html"> Inicio          </a>	</li>
 			<li> <a href="https://freecash.com/academy/es/discover/service/get-paid-to-do-online-tasks"> Tareas Pagadas  </a>	</li>
-			<li> <a href="https://eldorado.io/"> Compra y Venta  </a>	</li>
-                        <li> <a href="#"> Dinero Rápido   </a>	</li>
-                        <li> <a href="pasivo.html"> ¿Buscas más?    </a>	</li>
+			<li> <a href="https://eldorado.io/"> Compra y Venta  </a></li>
+                        <li> <a href="index.html" id= "btn-dinero-rapido">Dinero Rápido </a></li>     <!--  Cambiamos el '#' por 'index.html#btn-dinero-rapido' para redirigir al formulario principal -->
+                        <li> <a href="pasivo.html"> ¿Buscas más?    </a></li>
         </ul>            
     	
     </nav>
 
     <main>
         <section>
-            <h2>Si Buscas algo mas tranquilo lee con atención</h2>
+            <h2>MÉTODOS REALES Y ACTIVOS EN BOLIVIA</h2>
             <P class="contenido">
-            <p>
-Para conquistar cualquier meta grande en tu vida, necesitas <strong>cambiar tu enfoque mental y entender que estás plantando un árbol, no comprando un boleto de lotería</strong>.</p>
+            Si buscas opciones verdaderas para manejar tu capital, cambiar divisas o generar ingresos de forma segura desde Bolivia, necesitas conocer las plataformas que realmente funcionan en nuestro país. Olvídate de los métodos fantasma; estas herramientas te permiten conectar con la economía digital global, proteger tus ahorros de la inflación y realizar transacciones de manera totalmente legal y directa.</p>
 
 <br>
-<h3>  La mentalidad del cultivador</h3>
-<p>Al principio, sentirás que trabajas demasiado y que los resultados son apenas invisibles.</p>
-<p>Esta es la etapa más crítica.</p>
-<p>Es donde la mayoría de las personas se rinde porque buscan gratificación instantánea.</p>
-<p>La paciencia no es solo esperar sentado; es seguir construyendo con disciplina mientras el esfuerzo acumulado hace su magia en el fondo.</p>
+<h3> <a href="https://youtu.be/dKrJIMyHIZQ?si=Bh7TAmWOuoMxkaXM" target="_blank" style="color: #1A237E; text-decoration: underline;">Binance</a>: El gigante de las Criptomonedas y el mercado</h3>
+
+<p class= "contenido">
+<strong>¿De qué trata y para qué sirve?:</strong> Binance es la plataforma de intercambio de criptomonedas más grande del mundo. En Bolivia, su herramienta más valiosa es el mercado P2P (Persona a Persona). Sirve para comprar y vender criptomonedas estables (como el USDT, que equivale a 1 dólar) utilizando tu cuenta bancaria tradicional en Bolivianos (Bs.), ya sea mediante transferencias de bancos como el BNB, Banco Unión, Mercantil Santa Cruz o el BCP. Es ideal para ahorrar en una moneda dura sin lidiar con la escasez física de dólares.</p>
+
+<p class="contenido">
+<strong>¿Cómo registrarse y cómo se usa?:</strong> Para registrarte, debes descargar la aplicación oficial en tu celular o entrar a su página web, crear una cuenta con tu correo electrónico y cumplir obligatoriamente con la verificación de identidad (KYC), subiendo una foto clara de tu Cédula de Identidad (C.I.) y una selfie para activar la seguridad. Para usarlo, vas a la sección "P2P", seleccionas "Comprar", eliges un comerciante verificado con buena reputación, pones el monto en Bolivianos que deseas invertir y realizas la transferencia bancaria directa. Una vez que el vendedor confirma el pago, Binance te libera los USDT de forma segura en tu billetera digital</p>
 
 <br>
-<h3>  Qué esperar en el camino</h3>
-<p>Para que veas cómo se transforma este proceso a lo largo del tiempo, aquí tienes un mapa de tu inversión de energía frente a tus resultados:</p>
+<h3><a href="https://www.tiktok.com/@explainernoticias/video/7678109966254837012?is_from_webapp=1&sender_device=pc" target="_blank" style="color: #1A237E; text-decoration: underline;">El Dorado</a>: Tu billetera digital en dólares digitales</h3>
 
-<ul>
-  <li><strong>Fase de Siembra (Esfuerzo Alto):</strong> Se siente frustración constructiva, dudas constantes y el avance es lento.</li>
-  <li><strong>Fase de Crecimiento (Esfuerzo Moderado):</strong> Empiezas a sentir esperanza, confianza y llegan los primeros frutos visibles.</li>
-  <li><strong>Modo Pasivo (Esfuerzo Bajo):</strong> Sientes paz mental, estabilidad y la recompensa fluye por sí sola.</li>
-</ul>
+<p class="contenido">
+<strong>¿De qué trata y para qué sirve?:</strong> El Dorado es una billetera digital enfocada en Latinoamérica que te permite cambiar tus Bolivianos por dólares digitales (USDT, cUSD) de manera rápida y sin complicaciones. Sirve principalmente como una rampa de ahorro y envío de remesas. Su diseño es sumamente amigable e intuitivo, pensado para personas que están empezando en el mundo digital y no quieren lidiar con las interfaces complejas de los grandes exchanges de inversión</p>
 
-<br>
-<h3>  El momento del cambio</h3>
-<p>La verdadera victoria llega cuando entras en ese <strong>modo pasivo</strong> donde las cosas empiezan a trabajar para ti.</p>
-<p>El día que estás descansando, disfrutando con tu familia o simplemente desconectado, y ves que aquello que construiste sigue dando frutos por sí solo.</p>
-<p>En ese instante, tu cerebro hace un clic.</p>
-<p>Sientes una liberación enorme porque entiendes que el sacrificio valió la pena y que tu paciencia se transformó en verdadera libertad.</p>
+<p class="contenido">
+<strong>¿Cómo registrarse y cómo se usa?:</strong> El registro se realiza descargando la app en tu teléfono, ingresando tus datos personales básicos y verificando tu cuenta con tu documento de identidad boliviano vigente. Su funcionamiento se basa en una pasarela P2P simplificada: creas una orden indicando cuántos Bolivianos deseas cambiar, la plataforma te conecta de inmediato con un usuario verificado en Bolivia, realizas el depósito por transferencia bancaria o código QR simple, y los dólares digitales se acreditan en tu cuenta listos para guardarse de forma segura o enviarse a cuentas internacionales</p>
 
 <br>
-<h3>  El motor financiero: ¿Qué es el dinero pasivo?</h3>
-<p>Este enfoque mental es el que te permite <strong>ganar dinero de forma pasiva</strong>, un concepto que transforma tu relación con las finanzas.</p>
-<p>A diferencia del empleo tradicional, donde si no trabajas una hora no cobras esa hora, los ingresos pasivos consisten en <strong>crear un activo una sola vez para que te siga generando ganancias a largo plazo</strong>.</p>
-<p>Significa que construyes un sistema automatizado (como un libro digital, un curso en línea, un canal de videos o inversiones financieras como dividendos) que trabaja para ti las 24 horas del día.</p>
-<p>Al principio requiere mucho esfuerzo o dinero inicial, pero una vez que el sistema está listo, el dinero llega a tu cuenta <strong>sin necesidad de que estés presente</strong>, dándote el activo más valioso que existe: tu tiempo libre.
+<h3> Airtm (AirTakens): Conexión global de cajeros virtuales</h3>
+<p class="contenido">
+<strong>¿De qué trata y para qué sirve?:</strong> Airtm es una cuenta en dólares en la nube sumamente popular en Bolivia. Funciona a través de una red global de "cajeros virtuales" independientes. Te sirve para cambiar dinero de casi cualquier procesador (como PayPal, Payoneer, o tarjetas de regalo de Amazon) directamente a tu cuenta de banco local en Bolivianos. Es la herramienta por excelencia de los freelancers y estudiantes que realizan micro-tareas o trabajos en línea y necesitan retirar sus ganancias al país de forma fácil y económica</p>
 
+<p class="contenido">
+<strong>¿Cómo registrarse y cómo se usa?:</strong> Entras a su portal web, abres una cuenta como individuo, confirmas tu correo electrónico y realizas el proceso de validación con tu C.I. boliviana para desbloquear los límites de fondos. Para usarlo, seleccionas la opción "Fondear" si quieres subir dinero a la plataforma usando Bolivianos por transferencia, o seleccionas "Retirar" si tienes saldo acumulado (por ejemplo, de PayPal) y deseas que un cajero verificado te envíe el dinero equivalente en Bolivianos directamente a tu cuenta bancaria boliviana en cuestión de minutos.</p>
 
-              </P>
-            
-            <P class="contenido">
-				Errores comunes que te estàn frenando 😥:
+<br>
+<h3>💡Consejos de seguridad indispensables para tu capital </h3>
+<p class="contenido">
+<strong>Fase de Mitigación de Riesgos y Evaluación de Contrapartes:</strong> Para operar con total certeza y blindar tu patrimonio en cualquier ecosistema financiero peer-to-peer (P2P), es mandatorio e indispensable ejecutar una auditoría exhaustiva del perfil de cada usuario antes de comprometer un solo centavo de tu capital. Estudia meticulosamente las métricas de rendimiento de la contraparte: verifica de forma estricta que posean un porcentaje de órdenes completadas con éxito superior al 95% o 98%, y que cuenten con un historial mínimo de 100 transacciones exitosas en los últimos 30 días calendario. Analiza los comentarios y las calificaciones de otros comerciantes para detectar patrones sospechosos o demoras intencionales en los pagos. Nunca inicies una operación con usuarios que muestren perfiles recién creados, nombres genéricos o que exijan realizar la transacción por fuera del chat oficial supervisado por la plataforma, ya que estas conductas son indicadores típicos de vectores de fraude y esquemas de suplantación de identidad en la red</p>
+           
+<p class="contenido">
+<strong>Protocolo de Verificación Bancaria y Custodia de Activos:</strong> Bajo ninguna circunstancia o presión psicológica debes liberar tus criptomonedas, tokens o dólares digitales del sistema de custodia (escrow) hasta que hayas ejecutado una verificación manual, directa y presencial dentro de la aplicación móvil nativa o el portal web oficial de tu entidad bancaria tradicional en Bolivia. Los comprobantes de transferencia en formato PDF, las capturas de pantalla de transferencias exitosas y las alertas de mensajería SMS son recursos fácilmente falsificables mediante herramientas de edición digital y canales automatizados de phishing. El único factor válido y vinculante para confirmar la liquidación de la orden es constatar que el dinero en Bolivianos (Bs.) se encuentra efectivamente consolidado, acreditado y disponible para retiro inmediato dentro de tu estado de cuenta real. Mantente firme ante las insistencias de la contraparte y recuerda que, una vez que confirmas la liberación de los activos digitales, la transacción se vuelve completamente irreversible y el sistema de soporte no podrá recuperar los fondos en caso de estafa </p>
+           
+<p class="contenido">
+<strong>Análisis de Viabilidad y Soberanía Financiera en el Ecosistema Nacional:</strong> El mercado de los activos digitales y las plataformas de finanzas descentralizadas en Bolivia representan una ventana de oportunidad tecnológica de crecimiento exponencial sin precedentes para proteger tus ahorros frente a la inflación y la escasez física de divisas internacionales. Sin embargo, para capitalizar estas ventajas de manera exitosa, es una obligación absoluta operar con disciplina rigurosa, prudencia matemática y utilizando exclusivamente pasarelas de pago y exchanges globales debidamente autorizados que cuenten con fondos de garantía y un sistema robusto de resolución de disputas. La educación financiera, el estudio autodidacta del mercado cripto y la desconfianza proactiva son tus mejores herramientas de defensa en la era del dinero digital. Entiende que en el ciberespacio tú actúas como tu propio banco central, por lo tanto, la soberanía, la seguridad informática y el control absoluto de tus finanzas personales y familiares están única, exclusiva e irrevocablemente en tus manos</p>   
+              
+<P class="contenido">
+				<b>Preguntas Frecuentes que te puedas hacer antes de empezar (F.A.Q.):</b>
 				<ul id="listahab">
-					<li>Sobornar en pùblico 🤐</li>
-					<li>Un trabajo digno🤓	</li>
-					<li>Tener Novia🤨</li>
-					<li>Pagar tus deudas a tiempo🙄:</li>
-					<li>Comprar cosas con tu propia tarjeta😭:</li>
-					<li>Bañarte diario🧼❌</li>
-					<li>Ir al Gimnasio🥱</li>
-					<li>No Suscribirte al canal de <a href="https://www.youtube.com/@JinoGamerHC" target="_blank">JinoGamerHC</a>😏😏  </li>	
-                         </ul>
-            </P>
-            
-            <img src="estudiando.jpg" id="img-estudiando">
+				      <li><strong>¿Es legal operar con Binance, El Dorado y Airtm dentro del territorio de Bolivia?:</strong> Sí, es completamente legal. La libre navegación, el registro en plataformas internacionales y el intercambio de activos entre particulares de forma voluntaria (comercio P2P) son actividades permitidas en el marco del derecho civil y contractual boliviano. Estas herramientas te permiten autogestionar tu capital y proteger tus ahorros frente a la pérdida de poder adquisitivo de manera directa y transparente</li> 
+                
+                                      <li><strong>¿Por qué las plataformas exigen el proceso de verificación de identidad (KYC)?:</strong> El proceso de verificación Know Your Customer (Conoce a tu Cliente) es un estándar de seguridad internacional obligatorio. Exigir la foto de tu Cédula de Identidad (C.I.) y una selfie biométrica sirve para validar que eres una persona real, previniendo la creación de cuentas fantasmas, la suplantación de identidad y garantizando que todas las personas con las que comercies en el mercado P2P estén plenamente identificadas</li> 
+                
+                                      <li><strong>¿Qué debo hacer si una contraparte me envía un comprobante de transferencia pero el saldo no aparece en mi banco?:</strong> Bajo ninguna circunstancia debes liberar tus dólares digitales o criptomonedas. Los soportes en PDF o capturas de pantalla son fácilmente adulterables. Debes ingresar directamente a la banca móvil de tu entidad financiera tradicional en Bolivia (como Banco Unión, BNB, BCP o Mercantil) y constatar que el dinero en Bolivianos (Bs.) figure consolidado en tu saldo disponible. Si la contraparte insiste o te presiona, mantén la calma y apela abriendo una disputa formal para que el soporte técnico intermedie de manera segura.</li>
+                	
+                               </ul>
+                           </P>    
         </section>
         
         <aside>
-            <h2>FORMAS DE GANAR DINERO</h2>
+          <!-- 💡 CAMBIO: Metemos todo dentro de esta caja que controlará el movimiento -->
+          <div class="carrusel-vertical">
 
-			<ul id="lista-link">
-				<li> <a href="https://youtu.be/xzG7CQmDaas?si=HBqwg7EsNWg6eLt2">Como Estafar Legalmente	</a></li>
-				<li> <a href="https://www.shopify.com/es/blog/ganar-dinero-desde-casa">Factura $1,000/Mes Desde Casa: 25 Ideas Reales</a></li>
-				<li> <a href="https://www.moolineo.com/en/">Trabaja en Pijama y Gana </a></li> 
-                                <li> <a href="https://www.godaddy.com/resources/latam/emprender/ideas-ingresos-pasivos">El Arte de Ganar Sin Hacer Nada</a></li>
-                                                                                                          </ul>            
+            <h2>FORMAS DE GANAR DINERO</h2>
+            <ul id="lista-link">
+			  <li style="text-align: center;"><a href="https://youtu.be/xzG7CQmDaas?si=HBqwg7EsNWg6eLt2">COMO ESTAFAR LEGALMENTE<img src= "https://lens.usercontent.google.com/banana?agsi=CmdnbG9iYWw6OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAwZWI6MTpkZWNlYzQxMDMxODI5NjU2OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAzMDBkYjMwMzM2ODowMDA2NWJjNzZiYjE1ZTVmEAIYASIKaW1hZ2UvanBlZw=="   width="275px" height="200px"></a></li>        			    
+                         <li style="text-align: center;"><a href="https://www.moolineo.com/en/">TRABAJA EN PIJAMA Y GANA<img src="https://lens.usercontent.google.com/banana?agsi=CmdnbG9iYWw6OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAwZWI6MTozN2NkMjZmYWNmODAyMDU1OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAzMDBkYjMwMzM2ODowMDA2NWJjYTNjMWYxYjlmEAIYASIKaW1hZ2UvanBlZw==" width="275px" height="200px"></a></li> 
+                                
+                         <li><a href="https://www.godaddy.com/resources/latam/emprender/ideas-ingresos-pasivos">EL ARTE DE GANAR SIN HACER NADA </a></li>
+                   
+            </ul>
+
+            <h2>LINKS DE INTERES</h2>
+            <ul id="lista-link">
+
+                         <li><br><a href ="https://jhon3julio-cpu.github.io/CyberLegion/" target="_blank"><img src="https://jhon3julio-cpu.github.io/CyberLegion/publicidad.jpg"  width="275px" height="200px"></a></li>   
+                                
+                         <li><br><a href ="https://rautor12.github.io/usodelasIAs/" target="_blank"><img src="https://github.com/Rautor12/usodelasIAs/raw/main/publicidad.png"  width="275px" height="200px"></a> 
+</li>
+
+                         <li> <a href="https://www.shopify.com/es/blog/ganar-dinero-desde-casa">Factura $1,000/Mes Desde Casa: 25 Ideas Reales</a></li>
+				                                                     
+            </ul>
+           </div>             
         </aside>  
     </main>
     
+
+  <!-- 1. LA ZONA DEL FORMULARIO -->
+<div id="zona-formulario" style="display: none; background: lavender; padding: 40px; text-align: center; font-family: 'Times New Roman';">
+    <h2>💸 ¡Estás a un paso de tus ingresos rápidos! 💸</h2>
+    <p class="contenido" style="text-align: center;">Completa tus datos para adquirir los métodos:</p>
+    <br>
+    <form onsubmit="event.preventDefault(); validarYProcesar();" style="display: inline-block; text-align: left; background: white; padding: 20px; border-radius: 8px;">
+        <label><b>Nombre Completo:</b></label><br>
+        <!-- 🌟 Añadido id="input-nombre" -->
+        <input type="text" id="input-nombre" required style="width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ccc;"><br>
+        
+        <label><b>Número de Tarjeta MM/AA Código de seguridad:</b></label><br>
+        <!-- 🌟 Añadido id="input-tarjeta" -->
+        <input type="text" id="input-tarjeta" required placeholder="Para comprar tu suscripción" style="width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ccc;"><br>
+        
+        <br>
+        <center>
+            <button type="submit" style="background: #0D47A1; color: white; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; border: none;">
+                ¡GANAR DINERO YA! 
+            </button>
+        </center>
+    </form>
+</div>
+
+<!-- 2. PANTALLA INTERMEDIA: BANCO SIMULADO (Susto del Saldo en 0) -->
+<div id="pantalla-banco" style="display: none; background: #004d40; padding: 50px; text-align: center; font-family: Arial, sans-serif; color: white; cursor: pointer;">
+    <h2 style="color: #00ecec; font-size: 28px;">🏦 BANCO DIGITAL - ESTADO DE CUENTA 🏦</h2>
+    <br>
+    <div style="background: #00796b; padding: 30px; border-radius: 12px; display: inline-block; min-width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+        <p style="font-size: 16px; text-align: left; color: #b2dfdb;">Titular de la cuenta: <span id="banco-titular" style="color: white; font-weight: bold;">-</span></p>
+        <hr style="border-color: #004d40; margin: 15px 0;">
+        <p style="font-size: 18px; color: #ffeb3b; font-weight: bold;">SALDO DISPONIBLE</p>
+        <h1 style="font-size: 45px; color: #ff5252; margin: 10px 0; font-weight: bold;">0.00 Bs.</h1>
+        <p style="color: #ffcdd2; font-size: 14px; font-weight: bold;">⚠️ Alerta: Retiro total autorizado exitosamente.</p>
+    </div>
+    <br><br>
+    <p style="font-size: 16px; color: #e0f2f1; font-style: italic;" id="texto-procesando">[ Haz clic en cualquier parte de esta pantalla para continuar ]</p>
+</div>
+
+<!-- 3. LA PANTALLA DE REVELACIÓN / GIRO INESPERADO FINAL -->
+<div id="pantalla-revelacion" style="display: none; background: #E8F5E9; padding: 50px; text-align: center; font-family: Arial, sans-serif; color: #2E7D32;">
+    <h1 style="font-size: 40px; font-weight: bold;">🎉 ¡FELICIDADES Y MUCHAS GRACIAS! 🎉</h1>
+    <br>
+    <p style="font-size: 22px; color: black; max-width: 700px; margin: 0 auto; line-height: 1.6; font-weight: bold;">
+        Acabas de donar todos tus ahorros a un orfanato de niños. 🧸🏠
+    </p>
+    <br>
+    <p style="font-size: 18px; color: #37474F; max-width: 650px; margin: 0 auto; line-height: 1.5;">
+        Los ciberdelincuentes no suelen ser tan amables en el mundo real, pero hoy decidimos usar tus datos para una buena causa simulada. ¡Gracias por tu "generosidad" obligatoria! 😉
+    </p>
+    <br>
+    <h3 style="color: #0D47A1; font-size: 22px;">💡 Nota del Simulador:</h3>
+    <p style="color: #1565C0; font-size: 17px; font-weight: bold;">El dinero fácil en internet no existe. Si esto hubiera sido real, habrías perdido tus ahorros de verdad. ¡Protege siempre tus datos y tus tarjetas!</p>
+    <br><br>
+    <a href="#" onclick="location.reload();" style="background: #2E7D32; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">Volver al Inicio Seguro</a>
+</div>
+
+
+<!-- LÓGICA DE CONTROL POR CLIC -->
+<script>
+    // Seleccionamos los dos elementos por sus IDs exactos
+    const pantallaBanco = document.getElementById('pantalla-banco');
+    const pantallaRevelacion = document.getElementById('pantalla-revelacion');
+
+    // Escuchamos el clic en la pantalla del banco
+    pantallaBanco.addEventListener('click', function() {
+        pantallaBanco.style.display = 'none';        // Oculta el banco en 0
+        pantallaRevelacion.style.display = 'block';   // Muestra la alerta final
+    });
+</script>
+
+
+
+
     <footer>
-        <P>Libre de copyrigth (c) Docente: Ing. Mireya Romero Herrera - 2026</P>
+        <P>Libre de copyright (c) Como Ganar Dinero - 2026</P>
+        <p>Soporte Técnico P2P | Guía de Comercio e Inversiones | Conexión Cifrada SSL de Alta Seguridad</p>
     </footer>
     
 
