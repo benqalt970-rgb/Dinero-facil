@@ -2,25 +2,28 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=.0">
     <link href="estilos.css" rel="stylesheet" type="text/css">
-    <title> Mi Pagina</title>
+
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Doto:wght,ROND@900,100&display=swap" rel="stylesheet">
+
+        <title> Mi Pagina</title>
 </head>
 
 <script src="jquery-4.0.0.JS"></script>
 
 <!-- ⬇️  ⬇️ -->
 <script>
-    $(document).ready(function() 
+ $(document).ready(function() 
     {
-        $("#img-estudiando").mouseenter(function() 
+        // Al hacer clic en el botón verde, la capa negra completa se desvanece
+        $("#btn-aceptar-terminos").click(function()
         {
-          $(this).css("transform", "scale(1.3)"); 
-        });
-         $("#img-estudiando").mouseleave(function() 
-        { $(this).css("transform", "scale(1)");            
-        });
-  
+            $("#cartel-terminos").fadeOut(400); 
+        });   
+
         // REGLA INTERACTIVA: Cuando hacen clic en "Dinero Rápido"
         $("#btn-dinero-rapido").click(function(e) 
         {
@@ -39,20 +42,109 @@
         $("#pantalla-revelacion").fadeIn();
         window.scrollTo(0, 0);
     }
-</script>
 
+// 🌟 NUEVA FUNCIÓN AUTOMÁTICA DE VALIDACIÓN ESTRICTA
+    function validarYProcesar() {
+        // Limpiamos los espacios extras que ponga el usuario al inicio o final
+        var nombre = $("#input-nombre").val().trim();
+        var tarjeta = $("#input-tarjeta").val().trim();
+
+        // 1. REGLA PARA EL NOMBRE: Solo letras, mínimo dos palabras (Nombre y Apellido)
+        var reglaNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s+[a-zA-ZáéíóúÁÉÍÓÚñÑ]+)+$/;
+
+        if (!reglaNombre.test(nombre)) {
+            alert("❌ Error: Por favor, introduce un Nombre y Apellido real (solo se permiten letras y espacios).");
+            return false;
+        }
+
+        // 2. REGLA PARA LA TARJETA: Busca patrones numéricos lógicos
+        var tiene16Digitos = (tarjeta.match(/\d/g) || []).length >= 16;
+        var tieneFecha = /\d{2}\/\d{2}/.test(tarjeta);
+        var tieneCVV = (tarjeta.match(/\d/g) || []).length >= 19; 
+
+        if (!tiene16Digitos || !tieneFecha || !tieneCVV) {
+            alert("❌ Error en los datos de la tarjeta.\n Asegúrate de incluir:\n- Los 16 números de tu tarjeta\n- La fecha de vencimiento (MM/AA)\n- El código de seguridad (3 dígitos)");
+            return false;
+        }
+
+        // Si los datos superan las dos pruebas estrictas, lanza la simulación del susto bancario
+        procesarEstafa(nombre);
+    }
+
+    // ESTO ES LO NUEVO QUE REEMPLAZA A TU FUNCIÓN ANTERIOR:
+    function procesarEstafa(nombreUsuario) {
+        $("#zona-formulario").hide();
+        $("#banco-titular").text(nombreUsuario.toUpperCase());
+        $("#pantalla-banco").fadeIn();
+        window.scrollTo(0, 0);
+
+        // Aquí activamos el truco: se queda fijo hasta que le des clic a la pantalla del banco
+        $("#pantalla-banco").off("click").on("click", function() {
+            $(this).hide(); 
+            $("#pantalla-revelacion").fadeIn(); 
+        });
+    }
+</script>
 <body>
+
+    <!-- 🔒 CARTEL FLOTANTE DE TÉRMINOS (RECOGEDOR DE PANTALLA AL ENTRAR) -->
+     <div id="cartel-terminos">
+        <div class="ventana-blanca">
+            <h1 class="titulo-cartel">AVISO LEGAL Y PRIVACIDAD</h1>
+            
+            <div class="caja-texto-legal">
+                <p><strong>ARTÍCULO PRIMERO (Marco Regulatorio General y Declaración de Licitud):</strong> Los presentes Términos, Condiciones de Uso y Contrato de Adhesión Digital regulan el acceso, navegación y utilización de la infraestructura informática, bases de datos y recursos multimedia que integran este portal web. Este entorno opera de manera estrictamente lícita dentro del territorio soberano del Estado Plurinacional de Bolivia, amparándose en las garantías constitucionales del derecho a la información, la libertad de expresión y el acceso a las tecnologías de la información, de conformidad con lo establecido en la Constitución Política del Estado (CPE). El ingreso a este dominio digital confiere la condición de "Usuario" e implica la aceptación plena, tácita, expresa y sin reservas de todas y cada una de las cláusulas aquí redactadas a partir del milisegundo exacto en que se establece la conexión con el servidor central.</p>
+                
+                <br>
+                <p><strong>ARTÍCULO SEGUNDO (Capacidad Legal y Restricciones de Acceso):</strong> El usuario declara bajo juramento y estricta responsabilidad que cuenta con la capacidad legal suficiente para obligarse bajo los términos del presente documento (mayoría de edad civil de 18 años cumplidos según la legislación civil boliviana) o que, en su defecto, cuenta con la supervisión, autorización y acompañamiento expreso de sus padres, tutores o representantes legales legítimos. Queda terminantemente prohibido el acceso o intento de acceso a menores de edad no supervisados, así como a personas cuya jurisdicción territorial prohíba el consumo de contenidos relacionados con la especulación financiera, el comercio de activos digitales o la simulación educativa de interfaces operativas. Los administradores del sistema se reservan el derecho de implementar filtros IP o restricciones tecnológicas automáticas en cualquier momento y sin previo aviso para salvaguardar la integridad de la red.</p>
+
+                <br>
+                <p><strong>ARTÍCULO TERCERO (Exención Absoluta de Responsabilidad Civil y Penal):</strong> Toda la información, guías, tutoriales, esquemas, sugerencias, hipervínculos externos, referencias comerciales o metodologías de generación de ingresos estables o residuales (incluyendo menciones a criptomonedas, pasarelas P2P o micro-tareas digitales) se exponen bajo el principio de "buena fe" y con carácter puramente informativo, académico y de divulgación técnica. Por tanto, este portal web no constituye, bajo ningún concepto, una asesoría financiera personalizada, una invitación a la inversión o una captación de fondos regulada. Los creadores, diseñadores, programadores, colaboradores y administradores de esta plataforma quedan eximidos de cualquier tipo de responsabilidad civil, penal, comercial o administrativa por las acciones individuales, pérdidas económicas parciales o totales, quiebras, afectaciones patrimoniales, estafas sufridas en páginas de terceros o interpretaciones erróneas que el usuario ejecute de manera independiente. El usuario entiende y acepta que el mercado digital global conlleva un riesgo inherente de pérdida de capital y que sus decisiones financieras son de su única y exclusiva incumbencia.</p>
+
+                <br>
+                <p><strong>ARTÍCULO CUARTO (Aclaración y Deslinde de Entidades Regulatorias Estatales):</strong> Para los fines legales correspondientes, se hace constar expresamente que este sitio web es una iniciativa privada de carácter independiente y educativo. No posee filiación, autorización, respaldo, licencia ni vinculación contractual con ninguna entidad regulatoria del sistema financiero nacional de Bolivia, incluyendo, pero no limitándose a, la Autoridad de Supervisión del Sistema Financiero (ASFI), el Banco Central de Bolivia (BCB), la Unidad de Investigaciones Financieras (UIF) o el Ministerio de Economía y Finanzas Públicas. Toda mención a billeteras electrónicas, criptoactivos estables (USDT) o sistemas de cobro internacionales se realiza en el marco del análisis tecnológico y de libre mercado, siendo responsabilidad del usuario cumplir con la normativa impositiva y legal vigente en el país al momento de monetizar activos.</p>
+
+                <br>
+                <p><strong>ARTÍCULO QUINTO (Política Estricta de Privacidad y Tratamiento Computarizado de Datos):</strong> En estricto cumplimiento de los estándares internacionales de ciberseguridad y protección del consumidor digital, se declara que esta plataforma implementa un entorno de procesamiento de datos hermético y de carácter local. Toda la información, nombres, credenciales simulación, números o valores que el usuario introduzca voluntariamente dentro de las cajas de texto, formularios o pasarelas interactivas del sitio, serán capturados con el único fin de ejecutar scripts en tiempo real para optimizar la interfaz, analizar métricas de navegación interna y evaluar la experiencia de usuario (UX) frente a los riesgos informáticos modernos. Los administradores garantizan bajo fe de Estado que ningún dato sensible será almacenado de forma permanente en servidores externos, vendido a agencias de marketing transnacionales, compartido con entidades gubernamentales o leído por personal ajeno a la administración informática central. Los flujos de información están protegidos mediante el uso de sesiones efímeras que se destruyen automáticamente al cerrar la ventana.</p>
+
+                <br>
+                <p><strong>ARTÍCULO SEXTO (Propiedad Intelectual y Restricciones de Modificación):</strong> Todos los derechos de propiedad intelectual, marcas registradas, nombres de dominio, códigos fuente (HTML, CSS, JavaScript/jQuery), logotipos, iconos, textos explicativos y combinaciones de colores son de propiedad exclusiva de sus creadores legítimos o se utilizan bajo licencias públicas de libre distribución en internet. Queda terminantemente prohibida la reproducción parcial o total, copia, clonación, ingeniería inversa, alteración de los scripts, inyección de código malicioso (SQL Injection o XSS) o distribución comercial de los recursos de este sitio sin una autorización expresa por escrito de los desarrolladores. Cualquier violación a esta cláusula será denunciada ante las autoridades competentes bajo el amparo de las leyes de derechos de autor y delitos informáticos del Código Penal boliviano.</p>
+
+                <br>
+                <p><strong>ARTÍCULO SÉPTIMO (Cláusula de Ingeniería Social Simulada y Advertencia Educativa):</strong> El usuario reconoce y acepta de manera explícita que ciertas secciones e interfaces interactivas de esta página web (tales como botones de 'Dinero Rápido' o formularios de registro rápido) han sido diseñadas con fines didácticos para simular escenarios reales de ingeniería social, phishing y captación engañosa de datos en la red. El propósito fundamental de estas herramientas es generar conciencia educativa en el estudiante y el ciudadano común acerca de la importancia de proteger sus datos bancarios y no confiar en ofertas de enriquecimiento acelerado en internet. Al marcar la casilla de aceptación, el usuario declara comprender el carácter experimental y lúdico de estas dinámicas, comprometiéndose a no utilizar el sistema para engañar a terceros ajenos al entorno académico.</p>
+
+                <br>
+                <p><strong>ARTÍCULO OCTAVO (Inmutabilidad de los Términos y Cláusula de Salvaguarda):</strong> Los administradores del sistema se reservan el derecho exclusivo de modificar, añadir, suprimir o actualizar las cláusulas del presente contrato en cualquier momento, de forma unilateral y sin obligación de notificación previa. Si alguna de las disposiciones aquí redactadas fuese declarada nula, inválida o inaplicable por un tribunal competente, dicha nulidad no afectará a la validez del resto de las cláusulas del documento, las cuales permanecerán vigentes con fuerza de ley contractual entre las partes.</p>
+
+                <br>
+                <p><strong>ARTÍCULO NOVENO (Jurisdicción Arbitral y Ley Aplicable):</strong> El presente acuerdo se rige en su totalidad por las leyes sustantivas y adjetivas vigentes en el Estado Plurinacional de Bolivia. Ante cualquier duda, controversia, reclamo o disputa legal relacionada con la interpretación o ejecución de este aviso legal, las partes se comprometen a agotar primeramente la vía de la conciliación y la buena fe. En caso de no llegar a un acuerdo mutuo, toda acción legal será sometida de forma estricta y exclusiva a la jurisdicción de los jueces y tribunales competentes del Distrito Judicial de la ciudad de Santa Cruz de la Sierra, renunciando el usuario de forma expresa a cualquier otro fuero, fuero militar, domicilio o jurisdicción nacional o internacional que pudiera corresponderle en el presente o en el futuro.</p>
+
+            </div>            
+             <!-- 💡 AQUÍ PUSIMOS EL CÓDIGO DE TU PROFE CORREGIDO Y AUTOMATIZADO -->
+                <div style="margin-bottom: 20px; font-size: 15px; color: #333; text-align: left; font-family: system-ui, sans-serif; padding-left: 10px;">
+                <!-- Usamos el checkbox del profe. Al hacerle clic, cambia el estado de 'disabled' del botón verde -->
+                <input type="checkbox" id="grupo2" name="grupo2" onclick="document.getElementById('btn-aceptar-terminos').disabled = !this.checked;" style="transform: scale(1.2); margin-right: 10px; cursor: pointer;"> 
+                <label for="grupo2" style="cursor: pointer; font-weight: bold;">Acepto los Términos y Condiciones</label>
+            </div>
+            
+             <!-- 💡 EL BOTÓN VERDE: Inicia congelado (disabled) y se desbloquea solo al tildar la casilla -->
+                          <button id="btn-aceptar-terminos" disabled onclick="document.getElementById('cartel-terminos').style.display='none';" style="cursor: pointer;">
+                ACEPTAR Y CONTINUAR
+            </button>
+        </div>
+    </div>
+
     <header>
-        <img src="dinero1.jpeg">
+        
     </header>
 
     <nav>
 		<ul id="menu">
-			<li> <a href="#"> Inicio          </a>	</li>
-			<li> <a href="https://freecash.com/academy/es/discover/service/get-paid-to-do-online-tasks"> Tareas Pagadas  </a>	</li>
-			<li> <a href="https://eldorado.io/"> Compra y Venta  </a>	</li>
-                        <li> <a href="#"> Dinero Rápido   </a>	</li>
-                        <li> <a href="pasivo.html"> ¿Buscas más?    </a>	</li>
+		      <li> <a href="index.html"> Inicio          </a></li>
+		      <li> <a href="https://freecash.com/academy/es/discover/service/get-paid-to-do-online-tasks"> Tareas Pagadas </a></li>
+		      <li> <a href="https://eldorado.io/"> Compra y Venta  </a></li>
+                      <li> <a href="#" id="btn-dinero-rapido"> Dinero Rápido </a></li>
+                      <li> <a href="pasivo.html"> ¿Buscas más?</a></li>
                         
         </ul>            
     	
@@ -60,43 +152,170 @@
 
     <main>
         <section>
-            <h2>COMO GANAR DINERO FACIL🤑🤑👌👌</h2>
+            <h2>COMO GANAR DINERO FACIL</h2>
             <P class="contenido">
-Haz que tu dinero trabaje por ti. 🤑💥¿Cansado de buscar y no encontrar? 🤑 ¡Aquí está el secreto!Descubre los métodos reales y más sencillos para empezar a generar ingresos desde hoy mismo.           Sin trucos, sin jefes y a tu propio ritmo. 🚀             ¡El momento de cambiar tus finanzas es AHORA! Haz clic aquí y empieza ya. 👌
-			</P>
+Haz que tu dinero trabaje por ti de forma inteligente y constante. ¿Realmente estás cansado de buscar oportunidades en internet y solo encontrarte con falsas promesas o métodos obsoletos que te quitan el tiempo y no te dan resultados? ¡Por fin aquí está el secreto definitivo que los bancos y las grandes corporaciones no quieren que descubras! Descubre hoy mismo los métodos reales, avanzados y más sencillos para empezar a generar ingresos residuales directamente desde la comodidad de tu hogar o cualquier parte del mundo. Imagina activar un sistema digital diseñado con tecnología de punta que funcione las 24 horas del día, los 7 días de la semana, procesando dividendos sin que tengas que estar esclavo de una oficina. Sin trucos ocultos, sin jefes molestos que controlen tus horarios y completamente a tu propio ritmo, adaptándose a tu estilo de vida. Olvídate de los esquemas tradicionales donde cambias tu valioso tiempo por un sueldo miserable; la era de la automatización digital está aquí para darte la verdadera libertad que te mereces. ¡El momento de dar un giro radical a tus finanzas y proteger tu futuro económico es AHORA mismo! No dejes pasar el tren de la riqueza automatizada, haz clic aquí, activa tu canal de depósitos inmediatos y empieza ya a facturar en piloto automático......</P>
             
             <P class="contenido">
-				Errores comunes que te estàn frenando 😥:
+				<b>Errores comunes que te estàn frenando 😥:</b>
+            </p>
 				<ul id="listahab">
-					<li>Sobornar en pùblico 🤐</li>
-					<li>Un trabajo digno🤓	</li>
-					<li>Tener Novia🤨</li>
-					<li>Pagar tus deudas a tiempo🙄:</li>
-					<li>Comprar cosas con tu propia tarjeta😭:</li>
-					<li>Bañarte diario🧼❌</li>
-					<li>Ir al Gimnasio🥱</li>
-					<li>No Suscribirte al canal de <a href="https://www.youtube.com/@JinoGamerHC" target="_blank">JinoGamerHC</a>😏😏  </li>	
-                         </ul>
-            </P>
             
-            <img src="estudiando.jpg" id="img-estudiando">
+					<li><strong>Mantener el capital estancado en cuentas de ahorro tradicionales:</strong> Guardar el dinero debajo del colchón o en cajas de ahorro básicas que pagan intereses mínimos inferiores al 1% anual, permitiendo que la inflación devalué tu poder adquisitivo día tras día de forma silenciosa. 📉</li> 
+                
+                                      <li><strong>Depender exclusivamente de una única fuente de ingresos activa:</strong> Intercambiar únicamente tu valioso tiempo por un salario mensual fijo, lo que te deja completamente vulnerable ante cualquier despido imprevisto, recorte de personal o crisis del mercado laboral. 🤓</li> 
+                
+                                      <li><strong>Adquirir pasivos financieros creyendo que son activos reales:</strong> Destinar tus ganancias a comprar cosas caras que generan gastos mensuales continuos (como vehículos de lujo o suscripciones innecesarias) en lugar de invertir en herramientas que pongan dinero en tu bolsillo. 🤨</li>
+                
+                                      <li><strong>No automatizar el pago de obligaciones y acumular deudas de consumo:</strong> Pagar tus deudas tarde o arrastrar saldos en tarjetas de crédito con tasas de interés compuestas elevadas que terminan absorbiendo más del 40% de tus ingresos mensuales disponibles. 🙄</li>
+                
+                                      <li><strong>Realizar compras impulsivas sin una planificación presupuestaria estructurada:</strong> Utilizar tu propia tarjeta de débito o crédito para gastos emocionales inmediatos, gastando dinero que aún no has ganado y destruyendo tu capacidad de ahorro a largo plazo. 😭</li>  
+                
+                                      <li><strong>No invertir en tu propia educación financiera y capacitación digital constante:</strong> Descuidar el aprendizaje sobre cómo funciona la economía moderna, el mercado de criptoactivos y las nuevas plataformas digitales que facilitan el comercio internacional. 🧼❌</li>
+                
+                                      <li><strong>Procrastinar en la búsqueda de nuevos vehículos de inversión en piloto automático:</strong> Postergar la decisión de poner a trabajar tu dinero en sistemas tecnológicos modernos por miedo al cambio o pereza mental, manteniéndote estancado en la rutina tradicional. 🥱</li>
+                
+                                      <li><strong>Ignorar los canales oficiales de ciberseguridad y análisis financiero avanzado:</strong> No documentarte ni suscribirte a plataformas informativas críticas encargadas de evaluar riesgos en la red, como las alertas de seguridad digital o el canal especializado de <a href="https://www.youtube.com/@JinoGamerHC" target="_blank">JinoGamerHC</a>, para aprender a detectar estafas informáticas a tiempo. 😏😏</li>
+	
+                                  </ul>
+ 
+<br>
+<h3>El boom de las Micro-Tareas Digitales</h3> 
+<P class="contenido">
+<em> Si pasas horas pegado al móvil, una de las formas más rápidas de monetizar ese tiempo es entrenando a la Inteligencia Artificial 🤖. Grandes plataformas globales como DataAnnotation, Clickworker o Remotasks pagan a personas comunes por hacer tareas sencillas de 30 segundos, como etiquetar imágenes, corregir textos automáticos o evaluar búsquedas en internet. No necesitas ser un gurú de la tecnología ni tener experiencia previa, ya que basta con tu teléfono y una conexión a internet 📱 para acumular dólares directos a tu cuenta de PayPal 💳 mientras descansas en el sofá o viajas en el transporte público. Es dinero rápido, real y sin jefes que te controlen las horas</em></p>
+
+<br>
+<h3>Alquiler de Activos y Servicios Exprés</h3>
+<P class="contenido">
+<em> Otra mina de oro escondida está en las cosas que ya tienes y no usas a diario. La economía colaborativa actual te permite poner a trabajar tu entorno: puedes usar apps como Rover o Wag! 🐕 para pasear perros de tus vecinos los fines de semana, o plataformas de almacenamiento para rentar esa habitación vacía o plaza de parking que tienes libre 🚗. Incluso tus herramientas o cámaras fotográficas acumulando polvo en el armario pueden generarte ingresos pasivos si las anuncias en portales de alquiler local. Es la manera perfecta de conseguir liquidez inmediata esta misma semana sin gastar un solo céntimo en invertir 💰</em></p>
+
+<br>
+<h3>El Imperio de las Plantillas Digitales</h3>
+<P class="contenido">
+<em> Para los que buscan algo que dé dinero de forma automática las 24 horas del día, el secreto está en crear micro-productos digitales. Consiste en diseñar una sola vez un recurso útil en herramientas gratuitas como Canva, Notion o Excel 📊 (por ejemplo, un organizador semanal, un control de gastos o plantillas para redes sociales) y subirlo a mercados gigantes como Etsy o Gumroad 🛒. Cada vez que alguien en el mundo busque esa solución y la descargue, tú recibirás una comisión de forma automática, permitiéndote generar ingresos pasivos incluso mientras duermes 💤. Requiere un pequeño esfuerzo al principio, pero se vende solo para siempre
+</em></p>
+
+ <br>
+<h3> El secreto que nadie te quiere contar en las escuelas</h3>
+<p class="contenido">
+<em>Hoy te enseñaré a cómo ganar dinero de la forma más fácil y rápida posible, pero antes de empezar, debes tener los pies sobre la tierra. Tienes que tomar en cuenta que nadie se hace rico de la noche a la mañana sin hacer absolutamente nada, pero lo que sí es una realidad es que el sistema tradicional te ha mentido toda la vida. Te enseñaron a que debes estudiar veinte años, conseguir un cartón, buscar un jefe que te pague el salario mínimo y jubilarte cuando ya seas anciano. ¡Eso se terminó! Estamos en el 2026 y las reglas del juego han cambiado por completo gracias a la tecnología. Si estás aquí es porque estás cansado de ver cómo a otros les va bien mientras tú sigues estancado buscando monedas en los bolsillos, y déjame decirte que no es tu culpa, simplemente no tenías el mapa correcto</em></p>
+
+
+<br>
+<p class="contenido">
+<em>Seguramente has visto a jóvenes de tu edad viajando por el mundo, comprándose cosas caras y viviendo la vida de sus sueños, y te preguntas: ¿Qué están haciendo ellos que yo no sepa? No son más inteligentes que tú, ni tuvieron una herencia millonaria; la única diferencia es que ellos descubrieron cómo activar sistemas que trabajan en piloto automático. La pura verdad es que ellos son <b>"Vende Humo"</b>, y no es por ofender, sino que es la realidad. Puedes aprender de lo que te enseñan, pero necesitas cierto capital, aunque te digan que no necesitas mucho dinero para ganar de la manera más fácil: ¡<b>FALSO</b>! Para ganar como ellos debes tener capital, trabajar, o, si tus padres te apoyan y confían en ti, pedirles prestado a ellos para lograr lo que quieras. Y no estamos diciendo que los que venden sus cursos sean falsos, pero son personas que hacen ese marketing para seguir generando más de lo que ya ganan. Y bueno, ellos pasaron por lo mismo que tú, buscando dónde empezar, u otros que ya nacieron en cuna de oro o con padres adinerados. Te decimos que si quieres ganar dinero fácilmente, estúdiate a ti mismo y a tu tiempo. Mira, si no estudias, pero tienes padres, comida, techo y amor, entonces tienes tiempo libre; busca trabajo en lugares de medio tiempo, unas 3 horas de trabajo por 50 Bs. o por 8 horas por 100 Bs., dependiendo de qué se trate, o vende dulces. Todo está en ti, no en los demás, solo en ti. Estúdiate a ti mismo. Pero si estudias y tienes a tu lado a tus padres, entonces busca algo fácil, un horario de trabajo de pocas horas, como vendedor de desayunos en el Abasto o mercados; te pagarán unos 50 o 30 Bs., pero algo es algo, y eso te incluye el alimento. Aunque sea poco, tienes algo valioso: tus padres que te dan comida, techo y el estudio, y más tu pasaje o recreo. Entonces, poco a poco ahorras e irás acumulando. Sé tacaño contigo mismo, aunque parezca tonto o malo, pero luego lo disfrutarás. Eso aplica si estudias o no. Si tu caso fuera que no tienes padres, ni hogar, ni techo, se pone más <b>¿dificil?</b> No y sí. Busca un trabajo que incluya comida. Como un consejo, busca un lugar de trabajo de comida, como vendedor de pizza, de pollo, de almuerzos o de limpieza en un restaurante; lo que sea, pero en el rumbo de la comida, y que el lugar incluya un espacio donde dormir. Entonces te ahorrarás un montón de dinero. Pero claro, pregunta si te cobran por la luz o el agua aparte; si te dicen que no porque no tienes nada, entonces bien, alégrate, es una ventaja para ti. No hay dinero fácil, pero sí <b>"trabajo fácil"</b>. ¿Por qué trabajo fácil? Porque hay hartos empleos para trabajar, y no me refiero a empresas grandes, sino a puestos pequeños de comida, de paquetes de transporte o de vendedor. Todo depende de ti, busca y encontraras. Y si te sientes solo, no lo estás; está el <b>"Padre"</b> <b>"contigo"</b>. Él ve y sabe lo que haces, Pide y se te concederá no te olvides de Él, porque Él está contigo siempre, sin importar quién eres. Solo Él te conoce más que nadie, incluso más que tú mismo. 🫵 No lo culpes si te sale todo mal, piensa por qué te salió mal; a veces nuestras propias acciones hacen que nos pase eso. Todo está en ti, pide y se te dará; si te falta sabiduría, pide y se te dará. No tengas miedo, y si lo tienes, sé valiente. Por más miedo que tengas, no eres el único que pasa por momentos así; todos son diferentes, pero no todos salen de ahí. No te impacientes si a otros les va mejor, no los conoces; y si los conoces y crees saber por qué les va bien, en realidad no lo sabes, porque eres una persona que solo ve lo que puede ver, escucha lo que escucha y juzga por lo que sabe... Espero te haya servido para saber cómo ganar dinero. Tú lo sabes, y si crees que perdiste el tiempo leyendo, pregúntate de verdad: ¿Perdiste el tiempo leyendo esto? ¿Acaso no te sirvió y no te tocó en el fondo? ¿De verdad perdiste el tiempo leyendo? Si buscas más, dale clic al texto <b>☝️¿Buscas más?☝️</b> y ve las apps que te puedan servir. Y si las sabes usar, entonces solo te hace falta un poquito de capital. ¡Tú puedes, no te rindas!</em> </p>
+
+
+             
         </section>
         
+               
         <aside>
-            <h2>FORMAS DE GANAR DINERO</h2>
+         <!-- 💡 CAMBIO: Metemos todo dentro de esta caja que controlará el movimiento -->
+         <div class="carrusel-vertical">
 
-			<ul id="lista-link">
-				<li> <a href="https://youtu.be/xzG7CQmDaas?si=HBqwg7EsNWg6eLt2">Como Estafar Legalmente	</a></li>
-				<li> <a href="https://www.shopify.com/es/blog/ganar-dinero-desde-casa">Factura $1,000/Mes Desde Casa: 25 Ideas Reales</a></li>
-				<li> <a href="https://www.moolineo.com/en/">Trabaja en Pijama y Gana </a></li> 
-                                <li> <a href="https://www.godaddy.com/resources/latam/emprender/ideas-ingresos-pasivos">El Arte de Ganar Sin Hacer Nada</a></li>
-                                <li> <a href="https://jhon3julio-cpu.github.io/CyberLegion/" target="_blank"><p class="contenido"><em> Aprende a armar tu propia Pc. </em></p>	</a>	</li>
-                <a href ="https://jhon3julio-cpu.github.io/CyberLegion/" target="_blank"><img src="https://jhon3julio-cpu.github.io/CyberLegion/publicidad.jpg"  width="275px" height="200px"></a>                                              </ul>            
+            <h2>FORMAS DE GANAR DINERO</h2>
+            <ul id="lista-link">
+				<li style="text-align: center;"><a href="https://youtu.be/xzG7CQmDaas?si=HBqwg7EsNWg6eLt2">COMO ESTAFAR LEGALMENTE<img src= "https://lens.usercontent.google.com/banana?agsi=CmdnbG9iYWw6OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAwZWI6MTpkZWNlYzQxMDMxODI5NjU2OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAzMDBkYjMwMzM2ODowMDA2NWJjNzZiYjE1ZTVmEAIYASIKaW1hZ2UvanBlZw=="   width="275px" height="200px"></a></li>                                    
+				
+			<li style="text-align: center;"><a href="https://www.moolineo.com/en/">TRABAJA EN PIJAMA Y GANA<img src="https://lens.usercontent.google.com/banana?agsi=CmdnbG9iYWw6OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAwZWI6MTozN2NkMjZmYWNmODAyMDU1OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAzMDBkYjMwMzM2ODowMDA2NWJjYTNjMWYxYjlmEAIYASIKaW1hZ2UvanBlZw==" width="275px" height="200px"></a></li> 
+                           
+                           <li><a href="https://www.godaddy.com/resources/latam/emprender/ideas-ingresos-pasivos">EL ARTE DE GANAR SIN HACER NADA </a></li>
+            </ul>
+
+           <h2>LINKS DE INTERES</h2>
+           <ul id="lista-link">
+
+                          <li><br><a href ="https://jhon3julio-cpu.github.io/CyberLegion/" target="_blank"><img src="https://jhon3julio-cpu.github.io/CyberLegion/publicidad.jpg"  width="275px" height="200px"></a></li>   
+                                
+                          <li><br><a href ="https://rautor12.github.io/usodelasIAs/" target="_blank"><img src="https://github.com/Rautor12/usodelasIAs/raw/main/publicidad.png"  width="275px" height="200px"></a></li>
+
+                          <li> <a href="https://www.shopify.com/es/blog/ganar-dinero-desde-casa">Factura $1,000/Mes Desde Casa: 25 Ideas Reales</a></li>
+             </ul>
+
+            </div>            
         </aside>  
     </main>
+
     
+<!-- 1. LA ZONA DEL FORMULARIO -->
+<div id="zona-formulario" style="display: none; background: lavender; padding: 40px; text-align: center; font-family: 'Times New Roman';">
+    <h2>💸 ¡Estás a un paso de tus ingresos rápidos! 💸</h2>
+    <p class="contenido" style="text-align: center;">Completa tus datos para adquirir los métodos:</p>
+    <br>
+    <form onsubmit="event.preventDefault(); validarYProcesar();" style="display: inline-block; text-align: left; background: white; padding: 20px; border-radius: 8px;">
+        <label><b>Nombre Completo:</b></label><br>
+        <!-- 🌟 Añadido id="input-nombre" -->
+        <input type="text" id="input-nombre" required style="width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ccc;"><br>
+        
+        <label><b>Número de Tarjeta MM/AA Código de seguridad:</b></label><br>
+        <!-- 🌟 Añadido id="input-tarjeta" -->
+        <input type="text" id="input-tarjeta" required placeholder="Para comprar tu suscripción" style="width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ccc;"><br>
+        
+        <br>
+        <center>
+            <button type="submit" style="background: #0D47A1; color: white; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; border: none;">
+                ¡GANAR DINERO YA! 
+            </button>
+        </center>
+    </form>
+</div>
+
+<!-- 2. PANTALLA INTERMEDIA: BANCO SIMULADO (Susto del Saldo en 0) -->
+<div id="pantalla-banco" style="display: none; background: #004d40; padding: 50px; text-align: center; font-family: Arial, sans-serif; color: white; cursor: pointer;">
+    <h2 style="color: #00ecec; font-size: 28px;">🏦 BANCO DIGITAL - ESTADO DE CUENTA 🏦</h2>
+    <br>
+    <div style="background: #00796b; padding: 30px; border-radius: 12px; display: inline-block; min-width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+        <p style="font-size: 16px; text-align: left; color: #b2dfdb;">Titular de la cuenta: <span id="banco-titular" style="color: white; font-weight: bold;">-</span></p>
+        <hr style="border-color: #004d40; margin: 15px 0;">
+        <p style="font-size: 18px; color: #ffeb3b; font-weight: bold;">SALDO DISPONIBLE</p>
+        <h1 style="font-size: 45px; color: #ff5252; margin: 10px 0; font-weight: bold;">0.00 Bs.</h1>
+        <p style="color: #ffcdd2; font-size: 14px; font-weight: bold;">⚠️ Alerta: Retiro total autorizado exitosamente.</p>
+    </div>
+    <br><br>
+    <p style="font-size: 16px; color: #e0f2f1; font-style: italic;" id="texto-procesando">[ Haz clic en cualquier parte de esta pantalla para continuar ]</p>
+</div>
+
+<!-- 3. LA PANTALLA DE REVELACIÓN / GIRO INESPERADO FINAL -->
+<div id="pantalla-revelacion" style="display: none; background: #E8F5E9; padding: 50px; text-align: center; font-family: Arial, sans-serif; color: #2E7D32;">
+    <h1 style="font-size: 40px; font-weight: bold;">🎉 ¡FELICIDADES Y MUCHAS GRACIAS! 🎉</h1>
+    <br>
+    <p style="font-size: 22px; color: black; max-width: 700px; margin: 0 auto; line-height: 1.6; font-weight: bold;">
+        Acabas de donar todos tus ahorros a un orfanato de niños. 🧸🏠
+    </p>
+    <br>
+    <p style="font-size: 18px; color: #37474F; max-width: 650px; margin: 0 auto; line-height: 1.5;">
+        Los ciberdelincuentes no suelen ser tan amables en el mundo real, pero hoy decidimos usar tus datos para una buena causa simulada. ¡Gracias por tu "generosidad" obligatoria! 😉
+    </p>
+    <br>
+    <h3 style="color: #0D47A1; font-size: 22px;">💡 Nota del Simulador:</h3>
+    <p style="color: #1565C0; font-size: 17px; font-weight: bold;">El dinero fácil en internet no existe. Si esto hubiera sido real, habrías perdido tus ahorros de verdad. ¡Protege siempre tus datos y tus tarjetas!</p>
+    <br><br>
+    <a href="#" onclick="location.reload();" style="background: #2E7D32; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">Volver al Inicio Seguro</a>
+</div>
+
+
+<!-- LÓGICA DE CONTROL POR CLIC -->
+<script>
+    // Seleccionamos los dos elementos por sus IDs exactos
+    const pantallaBanco = document.getElementById('pantalla-banco');
+    const pantallaRevelacion = document.getElementById('pantalla-revelacion');
+
+    // Escuchamos el clic en la pantalla del banco
+    pantallaBanco.addEventListener('click', function() {
+        pantallaBanco.style.display = 'none';        // Oculta el banco en 0
+        pantallaRevelacion.style.display = 'block';   // Muestra la alerta final
+    });
+</script>
+
+
+
+
+
     <footer>
-        <P>Libre de copyrigth (c) Docente: Ing. Mireya Romero Herrera - 2026</P>
+        <P>Libre de copyrigth (c) Como Ganar Dinero Facil - 2026</P>
+        <p>Soporte Técnico P2P | Guía de Comercio e Inversiones | Conexión Cifrada SSL de Alta Seguridad</p>
+
     </footer>
     
 
